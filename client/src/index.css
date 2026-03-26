@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  * { box-sizing: border-box; }
+  body, #root { 
+    background-color: #09090b;
+    @apply text-onyx-50 font-sans antialiased; 
+    background-image: radial-gradient(circle at center, #27272a 1px, transparent 1px);
+    background-size: 24px 24px;
+    min-height: 100vh;
+  }
+  h1, h2, h3, h4, h5, h6 { color: #fafafa; font-weight: 700; }
+  p, span, div, label { font-family: 'Inter', sans-serif; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-[#18181b]; }
+  ::-webkit-scrollbar-thumb { @apply bg-[#3f3f46] rounded-full; }
+}
+
+@layer components {
+  .btn-primary { @apply text-white font-medium px-4 py-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed; background-color: #6366f1; border-radius: 8px; }
+  .btn-primary:hover { background-color: #4f46e5; }
+  .btn-secondary { @apply bg-[#18181b] hover:bg-white/[0.03] text-[#fafafa] border border-[#27272a] font-medium px-4 py-2 rounded-lg transition-all duration-200; }
+  .btn-ghost { @apply hover:bg-white/[0.03] text-[#a1a1aa] hover:text-[#fafafa] font-medium px-4 py-2 rounded-lg transition-all duration-200; }
+  .card { @apply p-6; background-color: #18181b; border: 1px solid #27272a; border-radius: 12px; }
+  .input { @apply text-[#fafafa] px-4 py-2.5 w-full focus:outline-none transition-all; background-color: #27272a; border: 1px solid #3f3f46; border-radius: 8px; }
+  .input::placeholder { color: #71717a; }
+  .input:focus { border-color: #6366f1; }
+  
+  /* Soft-fill badge styles requested by user */
+  .badge-success { @apply border border-status-success/30 bg-status-success/10 text-status-success text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider; }
+  .badge-warning { @apply border border-status-warning/30 bg-status-warning/10 text-status-warning text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider; }
+  .badge-danger { @apply border border-status-danger/30 bg-status-danger/10 text-status-danger text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider; }
+  .badge-info { @apply border border-status-info/30 bg-status-info/10 text-status-info text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider; }
+  .badge-primary { @apply border border-primary/30 bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider; }
+  .badge-secondary { @apply border border-onyx-700/50 bg-onyx-800/50 text-onyx-400 text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider; }
+}
