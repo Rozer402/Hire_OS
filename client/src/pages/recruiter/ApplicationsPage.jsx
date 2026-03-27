@@ -365,7 +365,7 @@ export function ApplicationsPage() {
                     {selectedApp.candidate.linkedIn && <a href={selectedApp.candidate.linkedIn} target="_blank" rel="noreferrer" className="flex items-center gap-1 ml-2 text-indigo-600 hover:underline"><ExternalLink className="w-3.5 h-3.5"/> LinkedIn</a>}
                     {selectedApp.candidate.github && <a href={selectedApp.candidate.github} target="_blank" rel="noreferrer" className="flex items-center gap-1 ml-2 text-indigo-600 hover:underline"><ExternalLink className="w-3.5 h-3.5"/> GitHub</a>}
                     {selectedApp.resumeUrl && (
-                      <a href={(import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace('/api', '') + (selectedApp.resumeUrl.startsWith('/') ? selectedApp.resumeUrl : '/' + selectedApp.resumeUrl)} target="_blank" rel="noreferrer" className="flex items-center gap-1 ml-2 text-emerald-600 font-semibold hover:underline">
+                      <a href={(import.meta.env.VITE_API_URL || '').replace('/api', '') + (selectedApp.resumeUrl.startsWith('/') ? selectedApp.resumeUrl : '/' + selectedApp.resumeUrl)} target="_blank" rel="noreferrer" className="flex items-center gap-1 ml-2 text-emerald-600 font-semibold hover:underline">
                         <ExternalLink className="w-3.5 h-3.5"/> View Resume
                       </a>
                     )}

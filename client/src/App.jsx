@@ -10,9 +10,9 @@ import { LoginPage } from './pages/shared/LoginPage';
 import { RegisterPage } from './pages/shared/RegisterPage';
 import { ForgotPasswordPage } from './pages/shared/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/shared/ResetPasswordPage';
-import { JobsPage } from './pages/shared/JobsPage';
+import JobsPage from './pages/shared/JobsPage';
 import { JobDetailPage } from './pages/shared/JobDetailPage';
-import { ApplicationDetailPage } from './pages/shared/ApplicationDetailPage';
+import { ApplicationDetailPage } from './pages/recruiter/ApplicationDetailPage';
 
 // Recruiter Pages
 import { Dashboard as RecruiterDashboard } from './pages/recruiter/Dashboard';

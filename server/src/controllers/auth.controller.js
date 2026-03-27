@@ -125,7 +125,7 @@ export const forgotPassword = async (req, res) => {
         to: user.email,
         subject: 'HireOS Password Reset',
         html: `<p>Click the link below to reset your password. This link expires in 15 minutes.</p>
-               <a href="http://localhost:5173/reset-password?token=${token}">Reset Password</a>`
+               <a href="${process.env.CLIENT_URL}/reset-password?token=${token}">Reset Password</a>`
       });
     } catch (emailError) {
       console.error('Nodemailer SendMail Error:', emailError);

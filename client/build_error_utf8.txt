@@ -1,0 +1,59 @@
+﻿node.exe : [31mfailed 
+to load config from C:\H
+ireOS\hireos\client\vite
+.config.js[39m
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo      
+        : NotSpecified  
+  : ([31mfailed to .   
+ ...config.js[39m:S    
+tring) [], RemoteEx    
+ception
+    + FullyQualifiedErr 
+   orId : NativeComman  
+  dError
+ 
+[31merror during build:
+Error 
+[ERR_MODULE_NOT_FOUND]: 
+Cannot find package 
+'vite' imported from C:\
+HireOS\hireos\client\vit
+e.config.js.timestamp-17
+74618684854-8231f196568d
+98.mjs
+    at Object.getPackage
+JSONURL (node:internal/m
+odules/package_json_read
+er:316:9)
+    at packageResolve (n
+ode:internal/modules/esm
+/resolve:768:81)
+    at moduleResolve (no
+de:internal/modules/esm/
+resolve:858:18)
+    at defaultResolve (n
+ode:internal/modules/esm
+/resolve:990:11)
+    at 
+#cachedDefaultResolve (n
+ode:internal/modules/esm
+/loader:737:20)
+    at 
+ModuleLoader.resolve (no
+de:internal/modules/esm/
+loader:714:38)
+    at ModuleLoader.getM
+oduleJobForImport (node:
+internal/modules/esm/loa
+der:293:38)
+    at #link (node:inter
+nal/modules/esm/module_j
+ob:208:49)[39m
