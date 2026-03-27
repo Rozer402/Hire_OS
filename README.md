@@ -1,63 +1,78 @@
-# HireOS
+# HireOS - AI-Powered Professional Hiring Platform
 
-HireOS is a comprehensive applicant tracking and recruitment platform that streamlines candidate management, interview scheduling, and bidirectional direct messaging between recruiters and candidates.
+HireOS is a comprehensive full-stack application designed to streamline the recruitment process. It leverages AI to parse resumes, conduct automated interviews, and provide bias-free candidate scoring.
 
-## Features
+## 🚀 Features
 
-- **Role-Based Workflows**: Strictly scoped dashboards for Candidates and Recruiters isolating pipelines efficiently.
-- **Application Tracking**: Real-time status movements across hiring stages (Applied → In-Review → Shortlisted → Interviewing → Offered).
-- **In-App Messaging**: Secure, context-aware web sockets providing a fully functional Glassmorphism-styled chat interface directly over active applications.
-- **Async AI Interview Parsing**: Robust AI analysis handling resume text evaluations via direct integrations dynamically.
-- **Secure Authentication**: Native `jsonwebtoken` encryption over BCrypt hashing, featuring a complete Nodemailer secure password-reset pipeline removing hard SMTP bypass risks.
-- **Production-Ready Builds**: Vite-powered decoupled React frontends serving cleanly parallel to Express backends.
+### For Recruiters
+- **Smart Dashboard**: High-level overview of hiring metrics and top talent.
+- **AI Resume Parsing**: Instant extraction of skills and experience from uploaded PDFs.
+- **Automated Interviewing**: Generate and conduct AI-driven contextual interviews.
+- **Bias-Free Scoring**: Rank candidates based on holistic skill matching rather than just keywords.
+- **Candidate Management**: Track applications through customizable hiring stages.
+- **Direct Messaging**: Bidirectional chat system with candidates.
 
-## Prerequisites
+### For Candidates
+- **Job Discovery**: Professional job board with advanced search and filtering.
+- **Seamless Application**: Interactive resume upload and AI-assisted profiles.
+- **Async Interviews**: Flexible interview format responding to AI-generated prompts.
+- **Real-time Status**: Track application progress and receive instant feedback.
 
-- **Node.js**: v18 or later.
-- **MongoDB**: Active Mongoose cluster connection.
-- **SMTP Server**: Valid Email credentials to safely issue Token updates.
+## 🛠️ Tech Stack
 
-## Setup Instructions
+- **Frontend**: React, Vite, Tailwind CSS, TanStack Query, Recharts, Lucide Icons.
+- **Backend**: Node.js, Express, MongoDB (Mongoose).
+- **AI Integration**: Google Gemini AI (Resume parsing & scoring).
+- **Communication**: Nodemailer (Email notifications), Custom Chat System.
 
-1. **Clone the Source**:
+## 📦 Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- MongoDB Atlas account
+
+### Installation
+
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-repo/hireos.git
+   git clone <repository-url>
    cd hireos
    ```
 
-2. **Install Dependencies**:
+2. **Frontend Setup**
    ```bash
-   # Install Server dependencies
-   cd server
-   npm install
-
-   # Install Client dependencies
-   cd ../client
-   npm install
-   ```
-
-3. **Configure Environments**:
-   Copy the provided `.env.example` and place it natively at your root or `server/` directory, updating the keys appropriately. 
-   On the frontend, setup `client/.env.production` alongside a local `client/.env` pointing `VITE_API_URL` locally at `http://localhost:5000/api`.
-
-4. **Launch Application**:
-   ```bash
-   # Terminal 1 - Boot the Express Backend
-   cd server
-   npm run dev
-
-   # Terminal 2 - Bind the React Client
    cd client
+   npm install
+   cp .env.example .env # Fill in VITE_API_URL
    npm run dev
    ```
 
-## Environment Variables
+3. **Backend Setup**
+   ```bash
+   cd ../server
+   npm install
+   cp .env.example .env # Fill in MONGODB_URI, JWT_SECRET, GEMINI_API_KEY
+   npm run dev
+   ```
 
-Your `.env` file should include the following core keys (refer to `.env.example`):
-```env
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-16-char-app-password
-MONGO_URI=mongodb+srv://...
-JWT_SECRET=super_secret_jwt_key
-VITE_API_URL=http://localhost:5000/api
-```
+## 🌐 Environment Variables
+
+### Frontend (`client/.env`)
+- `VITE_API_URL`: Base URL for the backend API (e.g., `http://localhost:5000/api`).
+
+### Backend (`server/.env`)
+- `PORT`: Server port (default: 5000).
+- `MONGODB_URI`: Your MongoDB Atlas connection string.
+- `JWT_SECRET`: Random string for secure token generation.
+- `GEMINI_API_KEY`: API key from Google AI Studio.
+- `EMAIL_USER` / `EMAIL_PASS`: Gmail App Password for notifications.
+- `FRONTEND_URL`: URL of your frontend for CORS (e.g., `http://localhost:5173`).
+
+## 🛡️ Best Practices
+- **Security**: JWT-based authentication and role-based access control (RBAC).
+- **Stability**: Global error boundaries and centralized API services.
+- **Performance**: Optimized data fetching with TanStack Query.
+- **Scalability**: Clean MVC architecture on the backend.
+
+---
+Built with ❤️ by the HireOS Team.

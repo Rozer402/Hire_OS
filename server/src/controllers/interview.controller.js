@@ -1,6 +1,7 @@
 import Interview from '../models/Interview.model.js';
 import Application from '../models/Application.model.js';
 import Job from '../models/Job.model.js';
+import Notification from '../models/Notification.model.js';
 import { generateInterviewQuestionsWithAI } from '../services/ai.service.js';
 
 export const createInterview = async (req, res) => {
@@ -38,6 +39,14 @@ export const createInterview = async (req, res) => {
       type: type || 'async',
       scheduledAt,
       questions
+    });
+
+    // Notify Candidate explicitly
+    await Notification.create({
+      recipient: application.candidate._id,
+      type: 'interview_scheduled',
+      message: `An interview for ${application.job.title} has been scheduled.`,
+      link: `/candidate/interviews`
     });
 
     res.status(201).json({ success: true, data: interview });

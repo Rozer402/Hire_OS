@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -6,28 +10,23 @@
 @layer base {
   * { box-sizing: border-box; }
   body, #root { 
-    background-color: #09090b;
-    @apply text-onyx-50 font-sans antialiased; 
-    background-image: radial-gradient(circle at center, #27272a 1px, transparent 1px);
-    background-size: 24px 24px;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased; 
     min-height: 100vh;
   }
-  h1, h2, h3, h4, h5, h6 { color: #fafafa; font-weight: 700; }
+  h1, h2, h3, h4, h5, h6 { @apply text-slate-900 font-bold; }
   p, span, div, label { font-family: 'Inter', sans-serif; }
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { @apply bg-[#18181b]; }
-  ::-webkit-scrollbar-thumb { @apply bg-[#3f3f46] rounded-full; }
+  ::-webkit-scrollbar-track { @apply bg-transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-slate-300 rounded-full hover:bg-slate-400; }
 }
 
 @layer components {
-  .btn-primary { @apply text-white font-medium px-4 py-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed; background-color: #6366f1; border-radius: 8px; }
-  .btn-primary:hover { background-color: #4f46e5; }
-  .btn-secondary { @apply bg-[#18181b] hover:bg-white/[0.03] text-[#fafafa] border border-[#27272a] font-medium px-4 py-2 rounded-lg transition-all duration-200; }
-  .btn-ghost { @apply hover:bg-white/[0.03] text-[#a1a1aa] hover:text-[#fafafa] font-medium px-4 py-2 rounded-lg transition-all duration-200; }
-  .card { @apply p-6; background-color: #18181b; border: 1px solid #27272a; border-radius: 12px; }
-  .input { @apply text-[#fafafa] px-4 py-2.5 w-full focus:outline-none transition-all; background-color: #27272a; border: 1px solid #3f3f46; border-radius: 8px; }
-  .input::placeholder { color: #71717a; }
-  .input:focus { border-color: #6366f1; }
+  .btn-primary { @apply bg-indigo-600 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm; }
+  .btn-secondary { @apply bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-medium px-4 py-2 rounded-lg transition-all duration-200 shadow-sm; }
+  .btn-ghost { @apply bg-transparent hover:bg-slate-100 text-slate-600 hover:text-slate-900 font-medium px-4 py-2 rounded-lg transition-all duration-200; }
+  .card { @apply p-6 bg-white border border-slate-200 rounded-xl shadow-sm; }
+  .input { @apply w-full bg-white border border-slate-300 text-slate-900 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm; }
+  .input::placeholder { @apply text-slate-400; }
   
   /* Soft-fill badge styles requested by user */
   .badge-success { @apply border border-status-success/30 bg-status-success/10 text-status-success text-xs px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider; }

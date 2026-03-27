@@ -3,6 +3,7 @@ import path from 'path';
 import pdfParse from 'pdf-parse';
 import Application from '../models/Application.model.js';
 import Job from '../models/Job.model.js';
+import Notification from '../models/Notification.model.js';
 import { parseResumeWithAI, scoreCandidateWithAI } from '../services/ai.service.js';
 import { fileURLToPath } from 'url';
 
@@ -40,6 +41,14 @@ export const applyToJob = async (req, res) => {
     job.applicantCount += 1;
     await job.save();
 
+    // Notify Recruiter natively safely
+    await Notification.create({
+      recipient: job.postedBy,
+      type: 'new_application',
+      message: `A new candidate applied for the ${job.title} role.`,
+      link: `/recruiter/applications/${application._id}`
+    });
+
     // AI Processing
     try {
       if (resumeUrl) {
@@ -53,8 +62,8 @@ export const applyToJob = async (req, res) => {
            const parsedResume = await parseResumeWithAI(data.text);
            application.parsedResume = parsedResume;
            
-           // Score Candidate
-           const aiResult = await scoreCandidateWithAI(job.description, parsedResume);
+           // Score Candidate Deterministically
+           const aiResult = await scoreCandidateWithAI(job.description, parsedResume, job.title, job.skills);
            application.aiScore = aiResult.score;
            application.aiReasoning = aiResult.reasoning;
            application.aiStrengths = aiResult.strengths;
@@ -128,6 +137,14 @@ export const updateStatus = async (req, res) => {
     application.status = status;
     application.statusHistory.push({ status, note });
     await application.save();
+
+    // Alert candidate gracefully
+    await Notification.create({
+      recipient: application.candidate,
+      type: 'application_update',
+      message: `Your application for ${application.job?.title || 'a recent role'} was moved to ${status.replace(/-/g, ' ')}.`,
+      link: '/candidate/applications'
+    });
 
     res.json({ success: true, data: application });
   } catch (error) {

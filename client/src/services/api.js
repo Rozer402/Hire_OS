@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+  baseURL: import.meta.env.VITE_API_URL
 });
 
 api.interceptors.request.use((config) => {
@@ -86,6 +86,12 @@ export const aiService = {
 export const messageService = {
   send: (recipientId, content) => api.post('/messages', { recipientId, content }).then(res => res.data),
   getConversation: (userId) => api.get(`/messages/${userId}`).then(res => res.data),
+};
+
+export const notificationService = {
+  getNotifications: () => api.get('/notifications').then(res => res.data),
+  markAsRead: (id) => api.patch(`/notifications/${id}/read`).then(res => res.data),
+  markAllAsRead: () => api.patch('/notifications/mark-all-read').then(res => res.data)
 };
 
 export default api;

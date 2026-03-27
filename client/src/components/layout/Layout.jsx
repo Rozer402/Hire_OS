@@ -14,11 +14,11 @@ export function Layout() {
   // }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#09090b] text-onyx-100">
+    <div className="flex h-screen overflow-hidden bg-slate-50 text-slate-900">
       <Sidebar />
-      <div className="flex flex-1 flex-col overflow-hidden relative bg-[#09090b]">
+      <div className="flex flex-1 flex-col overflow-hidden relative bg-slate-50">
         <Navbar />
-        <main className="flex-1 overflow-y-auto p-8 scroll-smooth bg-[#09090b]">
+        <main className="flex-1 overflow-y-auto p-6 scroll-smooth bg-slate-50">
           <div className="mx-auto max-w-6xl w-full">
             <Outlet />
           </div>

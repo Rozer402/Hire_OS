@@ -1,13 +1,10 @@
 import React from 'react';
-import clsx from 'clsx';
 
-function Skeleton({ className, ...props }) {
+export function Skeleton({ className, ...props }) {
   return (
     <div
-      className={clsx("animate-pulse rounded-md bg-gray-800", className)}
+      className={`animate-pulse rounded-md bg-[#27272a]/80 ${className}`}
       {...props}
     />
   );
 }
-
-export { Skeleton };

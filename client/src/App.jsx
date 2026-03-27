@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { ToastContainer } from './components/ui/Toast';
 import { ProtectedRoute } from './components/layout/ProtectedRoute';
@@ -31,7 +31,7 @@ import { ProfilePage } from './pages/shared/ProfilePage';
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <ToastContainer />
       <Routes>
         {/* Public */}
@@ -75,7 +75,7 @@ function App() {
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 

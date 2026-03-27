@@ -16,7 +16,7 @@ export const createJob = async (req, res) => {
 
 export const getJobs = async (req, res) => {
   try {
-    const { search, location, type, page = 1, limit = 10 } = req.query;
+    const { search, company, location, type, minSalary, maxSalary, page = 1, limit = 10 } = req.query;
 
     // Optional auth: endpoint is used publicly, so we only filter by recruiter
     // jobs when a valid JWT is present.
@@ -26,40 +26,69 @@ export const getJobs = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = await User.findById(decoded.id).select('-password');
       } catch {
-        // If token is invalid/expired, fall back to public behavior.
         req.user = undefined;
       }
     }
 
-    console.log('USER:', req.user); // temporary debug
-
     const query = { status: 'active' };
+    
+    // Strict Recruiter Scopes
     if (req.user?.role === 'recruiter') {
       query.postedBy = req.user._id;
     }
+    
+    // Partial Match Title
     if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } }
-      ];
+      query.title = { $regex: search, $options: 'i' };
     }
-    if (location) query.location = { $regex: location, $options: 'i' };
-    if (type) query.type = type;
+
+    // Explicit Location Match
+    if (location) {
+      query.location = { $regex: location, $options: 'i' };
+    }
+
+    // Company Name Lookup
+    if (company) {
+      const users = await User.find({ company: { $regex: company, $options: 'i' } }).select('_id');
+      const userIds = users.map(u => u._id);
+      if (userIds.length > 0) {
+        query.postedBy = { $in: userIds };
+      } else {
+        query.postedBy = null; // Short-circuit query gracefully yielding zero objects
+      }
+    }
+
+    // Salary Boundaries
+    if (minSalary || maxSalary) {
+      query.salaryMin = {};
+      if (minSalary) query.salaryMin.$gte = Number(minSalary);
+      if (maxSalary) query.salaryMin.$lte = Number(maxSalary);
+    }
+
+    if (type && type !== 'all') query.type = type;
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
     
-    // Use the requested logic for candidate/recruiter without restrictive filters
     const jobs = await Job.find(query)
       .populate('postedBy', 'name company companySize avatar')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit));
 
-    console.log('JOBS:', jobs.length, 'found'); // temporary debug
+    const totalJobs = await Job.countDocuments(query);
+    const totalPages = Math.ceil(totalJobs / parseInt(limit));
 
     res.json({
       success: true,
-      data: jobs
+      data: {
+        jobs,
+        pagination: {
+          total: totalJobs,
+          page: parseInt(page),
+          pages: totalPages,
+          limit: parseInt(limit)
+        }
+      }
     });
   } catch (error) {
     console.error('GetJobs Error:', error);
