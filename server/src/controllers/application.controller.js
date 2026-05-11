@@ -14,8 +14,8 @@ export const applyToJob = async (req, res) => {
   try {
     const { jobId, resumeUrl: bodyResumeUrl, coverLetter } = req.body;
     let resumeUrl = bodyResumeUrl;
-    if (req.file?.filename) {
-      resumeUrl = `/uploads/${req.file.filename}`;
+    if (req.file?.path) {
+      resumeUrl = req.file.path;
     }
     if (!resumeUrl) {
       return res.status(400).json({ success: false, message: 'Resume PDF is required' });
@@ -52,10 +52,20 @@ export const applyToJob = async (req, res) => {
     // AI Processing
     try {
       if (resumeUrl) {
-         const rel = resumeUrl.replace(/^\//, '');
-         const filePath = path.join(__dirname, '../../', rel);
-         if (fs.existsSync(filePath)) {
-           const dataBuffer = fs.readFileSync(filePath);
+         let dataBuffer;
+         if (resumeUrl.startsWith('http')) {
+           const response = await fetch(resumeUrl);
+           const arrayBuffer = await response.arrayBuffer();
+           dataBuffer = Buffer.from(arrayBuffer);
+         } else {
+           const rel = resumeUrl.replace(/^\//, '');
+           const filePath = path.join(__dirname, '../../', rel);
+           if (fs.existsSync(filePath)) {
+             dataBuffer = fs.readFileSync(filePath);
+           }
+         }
+
+         if (dataBuffer) {
            const data = await pdfParse(dataBuffer);
            
            // Parse Resume
