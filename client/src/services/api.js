@@ -26,6 +26,17 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('hireos_token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const authService = {
   register: (data) => api.post('/auth/register', data).then(res => res.data),
   login: (data) => api.post('/auth/login', data).then(res => res.data),
