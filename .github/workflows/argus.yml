@@ -1,0 +1,24 @@
+name: Argus Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+concurrency:
+  group: argus-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Argus
+        uses: Rozer402/argus@main
+        with:
+          groq_api_key: ${{ secrets.GROQ_API_KEY }}
